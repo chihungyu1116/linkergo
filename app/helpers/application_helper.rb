@@ -23,19 +23,25 @@ module ApplicationHelper
 		page_boundary = 10
 		page_total = (Merchant.count/20.0).ceil
 
-		redirect_to if page_current > page_total
+		return redirect_to controller: 'application', action: 'not_found' if page_current > page_total
 
+		if page_total < page_boundary # page_total = 8 return [1...8]
+			page_start = 1
+			page_end = page_total
+		else
+			if (page_current - 5 > 0) && (page_current + 5 > page_total) # page_current = 6 return [2...11]
+				page_start = page_current - 4
+				page_end = page_current + 5
+			elsif (page_current - 5 > 0) && !(page_current + 5 > page_total) # page_current = 11, page_total = 14 return [5...14]
+				page_start = page_total - 9
+				page_end = page_total
+			elsif !(page_current - 5 > 0) && (page_current + 5 > page_total) # page_current = 4, page_total = 14 return [1...10]
+				page_start = 1
+				page_end = 10
+			end
+		end
 
-
-
-
-		page_start = 1 if page_current <= 5
-		page_start = (page_total - 1) - page_boundary if page_current >= page_total - 5
-
-
-		191 192 193 194 195 196 197 198 199 200
-		195
-		200 
-
+		page_obj[:boundaries] = [page_start,page_end]
+		page_obj[:current] = page_current
 	end
 end

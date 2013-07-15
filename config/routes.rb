@@ -3,6 +3,8 @@ Gulpio::Application.routes.draw do
 
   resources :restaurants
 
+  get '/not_found' => 'application#not_found'
+
   root to: 'publics#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -6,8 +6,4 @@ class ApplicationController < ActionController::Base
 	def not_found
 		raise ActionController::RoutingError.new('Not Found')
 	end
-
-	def render_404
-		render text: 'Not Found', status: 404
-	end
 end

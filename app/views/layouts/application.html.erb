@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gulpio</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div class='app'>
+		<header class='app-header'>
+			<%= render partial: '/application/header' %>
+		</header>
+		<main class='app-main container'>
+			<% if notice %>
+				<div class='alert alert-info'><%= notice %></div>
+			<% end %>
+			<% if alert %>
+				<div class='alert alert-error'><%= alert %></div>
+			<% end %>
+			<%= yield %>
+		</main>
+		<footer class='app-footer'>
+		</footer>
+	</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<div class='navbar navbar-inverse mb40'>
+	<div class='navbar-inner rnd-crn-0'>
+		<div class='container'>
+			<a class='brand' href='/'>Gulpio</a>
+			<ul class='nav pull-right'>
+				<% if user_signed_in? %>
+					<li class='divider-vertical'></li>
+					<li>
+  						<%= link_to '<i class="icon-user mr10"></i>Edit profile'.html_safe, edit_user_registration_path %>
+  					</li>
+  					<li class='divider-vertical'></li>
+  					<li>
+  						<%= link_to '<i class="icon-signout mr10"></i>Logout'.html_safe, destroy_user_session_path, method: :delete %>
+  					</li>
+				<% else %>
+					<li class='divider-vertical'></li>
+					<li>
+						<%= link_to '<i class="icon-pencil mr10"></i>Sign up'.html_safe, new_user_registration_path %>
+					</li>
+					<li class='divider-vertical'></li>
+					<li>
+						<%= link_to '<i class="icon-signin mr10"></i>Login'.html_safe, new_user_session_path %>
+					</li>
+				<% end %>
+			</ul>
+		</div>
+	</div>
+</div>

@@ -58,8 +58,8 @@
 	<div class="pagination">
   		<ul>
     		<% 
-    			page_boundaries = @page[:boundaries]
-    			page_current = @page[:current]
+    			page_boundaries = @pages[:boundaries]
+    			page_current = @pages[:current]
     			page_first = page_boundaries[0]
     			page_last = page_boundaries[-1]
     			page_prev = (page_current - 1) > 0 ? (page_current - 1) : nil

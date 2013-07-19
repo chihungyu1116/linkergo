@@ -13,5 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap/bootstrap.min
+//= require plugins/lazyload
+//= require map/google_map.js
 //= require turbolinks
 //= require_self

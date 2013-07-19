@@ -207,3 +207,11 @@
 		</ul>
 	</nav>
 </div>
+<% 
+	restaurants_json = @restaurants.to_json(only: [:id,:latlon])
+%>
+<script>
+	var Gulpio = Gulpio || {};
+	Gulpio.vars = Gulpio.vars || {};
+	Gulpio.vars.places = <%= restaurants_json.html_safe -%>
+</script>

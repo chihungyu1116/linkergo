@@ -209,29 +209,56 @@ var Gulpio = Gulpio || {};
 
 Gulpio.Map = (function(){
   var self = {
-    loadPlaces : function(){
-      var places = this.places;
+    setPlaces : function(places){
+      var places = places || this.places;
       $.each(places,function(index,place){
 
       });
+    },
+    setMap : function(spec){
+      var spec = spec || {},
+          id = spec.id || this.id,
+          type = spec.type || this.config.type,
+          center = spec.center || this.config.center,
+          zoom = spec.zoom || this.config.zoom;
+
+      this.map = new google.maps.Map($(id)[0],{
+        //type : type,
+        center : center,
+        zoom: zoom
+      });
+    },
+    setDefaults : function(){
+      var places = this.places,
+          latLon = places[0]['latlon'].split(',');
+
+      this.config = {
+        //type : google.maps.MapTypeId.ROADMAP,
+        center : new google.maps.LatLng(latLon[0],latLon[1]),
+        zoom: 11
+      };
+
+      this.setMap();
+      this.infoWindow = new google.maps.InfoWindow();
     }
   }
   return {
-    getNew : function(spec,callback){
-      this.loadScript(function(){
+    getNew : function(spec){
+      this.getScript(function(){
         var that = Object.create(self);
         that.id = spec.id;
         that.places = spec.places;
-        that.loadPlaces();
+        that.setDefaults();
+        that.setPlaces();
         return that;
       });
     },
-    loadScript : function(callback){
-      if(Gulpio.Map.ready) return callback();
-      $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCCVV1uuVJyhdgpkbMLjqDm4jFEcytsdAE&sensor=false',function(){
-        Gulpio.Map.ready = true;
-        if(callback) callback();
-      });
+    getScript : function(callback){
+      if(google && google.maps) return callback();
+      // $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCCVV1uuVJyhdgpkbMLjqDm4jFEcytsdAE&sensor=false',function(){
+      //   Gulpio.Map.ready = true;
+      //   if(callback) callback();
+      // });
     }
   }
 }());

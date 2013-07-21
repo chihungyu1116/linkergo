@@ -18,38 +18,47 @@ module ApplicationHelper
 		return score_str
 	end
 
-	def application_get_page_obj_from(count,page_current,page_boundary,page_num_returned)
-		page_obj = {}
-		page_total = (count/page_num_returned).ceil
-		page_total =8
-		page_boundary_half = (page_boundary/2).ceil
+	def application_return_triple_dashes_if_blank(value)
+		return value.blank? ? '---' : value
+	end
 
+	def application_get_page_obj_from(total_count,page_current,page_boundary,num_results_returned_per_page)
+		page_obj = {}
+		page_total = (total_count/num_results_returned_per_page).ceil
+		page_boundary_middle = (page_boundary/2).ceil
+		# if page_current not specified or page_current is greater than the total page available, redirect to no_found page
 		return redirect_to '/not_found' if page_current.nil? || page_current > page_total
 
-		is_page_current_less_than_or_equal_to_page_boundary_half = page_current <= page_boundary_half
-		is_page_current_plus_page_boundary_half_greater_than_page_total = (page_current + page_boundary_half) > page_total
+		is_page_current_lte_page_boundary_middle = page_current <= page_boundary_middle
+		is_page_current_plus_page_boundary_middle_gt_page_total = (page_current + page_boundary_middle) > page_total
 
-		# based on page_boundary = 9
-		if !is_page_current_less_than_or_equal_to_page_boundary_half && !is_page_current_plus_page_boundary_half_greater_than_page_total # page_current = 6, page_total = 100 return [2...10]
-			page_start = page_current - page_boundary_half
-			page_end = page_current + page_boundary_half
-		elsif !is_page_current_less_than_or_equal_to_page_boundary_half && is_page_current_plus_page_boundary_half_greater_than_page_total # page_current = 11, page_total = 14 return [6...14]
+		if !is_page_current_lte_page_boundary_middle && !is_page_current_plus_page_boundary_middle_gt_page_total
+			# page_current = 6, page_total = 100 return [2...10]
+			page_start = page_current - page_boundary_middle
+			page_end = page_current + page_boundary_middle
+		elsif !is_page_current_lte_page_boundary_middle && is_page_current_plus_page_boundary_middle_gt_page_total
+			# page_current = 11, page_total = 14 return [6...14]
 			page_start = page_total - page_boundary + 1
 			page_end = page_total
-		elsif is_page_current_less_than_or_equal_to_page_boundary_half && !is_page_current_plus_page_boundary_half_greater_than_page_total # page_current = 4, page_total = 14 return [1...9]
-			page_start = 1
-			page_end = page_total
-		else # page_total < page_boundary
+		elsif is_page_current_lte_page_boundary_middle && !is_page_current_plus_page_boundary_middle_gt_page_total
+			# page_current = 4, page_total = 14 return [1...9]
 			page_start = 1
 			page_end = page_boundary
+		else # page_total < page_boundary
+			page_start = 1
+			page_end = page_total
 		end
 
+		# fix incorrect values
 		page_start = page_start >= 1 ? page_start : 1
 		page_end = page_end <= page_total ? page_end : page_total
 
 		page_obj[:boundaries] = (page_start...page_end+1).to_a
 		page_obj[:current] = page_current
-
+		page_obj[:first] = page_start
+		page_obj[:last] = page_end
+		page_obj[:prev] = (page_current - 1) > 0 ? (page_current - 1) : nil
+		page_obj[:next] = (page_current + 1) <= page_end ? (page_current + 1) : nil
 
 		return page_obj
 	end

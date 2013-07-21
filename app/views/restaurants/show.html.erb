@@ -1,6 +1,4 @@
-<% content_for :head do %>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCVV1uuVJyhdgpkbMLjqDm4jFEcytsdAE&sensor=false"></script>
-<% end %>
+
 <%= render partial: 'application/header_nav' %>
 <div>
 	<h2 class='section-title'><i class='icon-food mr20'></i>Restaurant Channel</h2>
@@ -72,14 +70,17 @@
 	<%= render partial: 'restaurants/categories' %>
 </div>
 <% 
-	restaurants_json = @restaurants.to_json(only: [:id,:latlon])
+	restaurants_json = @restaurants.to_json(only: [:id,:latlon,:name,:city,:state,:zip,:address,:phone,:hours])
 %>
-<script>
-	var Gulpio = Gulpio || {};
-	Gulpio.vars = Gulpio.vars || {};
-	Gulpio.vars.places = <%= restaurants_json.html_safe -%>;
-	Gulpio.Map.getNew({
-		id : '#map',
-		places : Gulpio.vars.places
-	});
-</script>
+<% content_for :body do %>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCVV1uuVJyhdgpkbMLjqDm4jFEcytsdAE&sensor=false"></script>
+	<script>
+		var Gulpio = Gulpio || {};
+		Gulpio.vars = Gulpio.vars || {};
+		Gulpio.vars.places = <%= restaurants_json.html_safe -%>;
+		Gulpio.Map.getNew({
+			id : '#map',
+			places : Gulpio.vars.places
+		});
+	</script>
+<% end %>

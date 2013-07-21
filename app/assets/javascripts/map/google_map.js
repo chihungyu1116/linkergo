@@ -204,42 +204,95 @@
 //   };
 // }());
 
-
 var Gulpio = Gulpio || {};
 
 Gulpio.Map = (function(){
   var self = {
-    setPlaces : function(places){
-      var places = places || this.places;
-      $.each(places,function(index,place){
 
+    getLatLonObject : function(latlon){
+      latlon = latlon.split(',');
+      return new google.maps.LatLng(+latlon[0],+latlon[1]);
+    },
+    getPlaceImageObject : function(){
+
+    },
+    setPlaceOnMap : function(place){
+      var id = '#place-' + place.id,
+          name = place.name,
+          address = place.address,
+          city = place.city,
+          state = place.state,
+          zip = place.zip,
+          phone = place.phone,
+          hours = place.hours,
+          latlon = place.latlon,
+          that = this,
+          marker;
+      
+      function showInfoWindow() {
+        var infoWindowStr = [
+          '<address class="map-info adr">',
+            '<div class="business-name">',name,'</div>',
+            '<div class="street-address">',address,'</div>',
+            '<div class="locality">',city,' ',state,' ',zip,'</div>',
+            '<div class="tel">',phone,'</div>',
+            '<div class="hours">',hours,'</div>',
+          '</address>'
+        ].join('');
+
+        that.infoWindow.setContent(infoWindowStr);
+        that.infoWindow.open(that.map,marker);
+      }
+
+      if(latlon){
+        latlon = this.getLatLonObject(latlon);
+
+        marker = new google.maps.Marker({
+          position: latlon,
+          title: name
+        });
+        marker.setMap(this.map);
+        marker.setPosition(latlon);
+
+        google.maps.event.addListener(marker,'click',showInfoWindow);
+      }
+    },
+    setPlacesOnMap : function(places){
+      var places = places || this.places,
+          that = this;
+
+
+      $.each(places,function(index,place){
+        that.setPlaceOnMap(place);
       });
     },
     setMap : function(spec){
       var spec = spec || {},
           id = spec.id || this.id,
-          type = spec.type || this.config.type,
-          center = spec.center || this.config.center,
-          zoom = spec.zoom || this.config.zoom;
+          type = spec.type || this.mapType,
+          center = spec.center || this.mapCenter,
+          zoom = spec.zoom || this.mapZoom;
 
       this.map = new google.maps.Map($(id)[0],{
-        //type : type,
+        type : type,
         center : center,
         zoom: zoom
       });
+    },
+    setPlaces : function(places){
+      this.places = places;
     },
     setDefaults : function(){
       var places = this.places,
           latLon = places[0]['latlon'].split(',');
 
-      this.config = {
-        //type : google.maps.MapTypeId.ROADMAP,
-        center : new google.maps.LatLng(latLon[0],latLon[1]),
-        zoom: 11
-      };
+      this.mapType = google.maps.MapTypeId.ROADMAP;
+      this.mapCenter = new google.maps.LatLng(latLon[0],latLon[1]);
+      this.mapZoom = 11;
+
+      this.infoWindow = new google.maps.InfoWindow();
 
       this.setMap();
-      this.infoWindow = new google.maps.InfoWindow();
     }
   }
   return {
@@ -249,16 +302,13 @@ Gulpio.Map = (function(){
         that.id = spec.id;
         that.places = spec.places;
         that.setDefaults();
-        that.setPlaces();
+        that.setPlacesOnMap();
         return that;
       });
     },
     getScript : function(callback){
-      if(google && google.maps) return callback();
-      // $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCCVV1uuVJyhdgpkbMLjqDm4jFEcytsdAE&sensor=false',function(){
-      //   Gulpio.Map.ready = true;
-      //   if(callback) callback();
-      // });
+      // google map jsapi doesn't support map 3, no lazyload for now
+      callback();
     }
   }
 }());

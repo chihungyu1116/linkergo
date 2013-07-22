@@ -65,7 +65,7 @@
     		<li<%= ' class=active' if @pages[:last] == @pages[:current] -%>><a<%= " href=/restaurants/#{@pages[:next]}" if @pages[:next] -%>>Next</a></li>
   		</ul>
 	</div>
-	<div id='map' style='height:500px;width:500px'></div>
+	<div id='map' style='height:500px;'></div>
 
 	<%= render partial: 'restaurants/categories' %>
 </div>

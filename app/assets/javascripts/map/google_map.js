@@ -111,7 +111,7 @@ Gulpio.Map = (function(){
 
       this.mapType = google.maps.MapTypeId.ROADMAP;
       this.mapCenter = new google.maps.LatLng(latLon[0],latLon[1]);
-      this.mapZoom = 8;
+      this.mapZoom = 10;
 
       this.infoWindow = new google.maps.InfoWindow();
 

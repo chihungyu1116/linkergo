@@ -94,3 +94,24 @@ page 60! (WRS) important[!!!]
 
 9) VS features
 用戶 可以排名他們以評分的地方 like 牛肉麵大王vs排骨飯之家
+
+10)
+
+Merchant can list their signature dishes
+and users can give endorsement to dishes
+
+
+
+
+
+NLP
+Transform English questions into database query
+
+
+
+
+
+
+
+
+

@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
+
+
+  # allow user.reviews to find what reviews user has written
+  has_many :reviews, dependent: :destroy
 end

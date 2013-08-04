@@ -62,4 +62,18 @@ module ApplicationHelper
 
 		return page_obj
 	end
+
+	def application_split_into_multilines(str)
+		str_arr = str.split(',')
+		result = ''
+		str_arr.each_with_index do |item,index|
+			result += item
+			is_last = index == (str_arr.size - 1)
+			unless is_last
+				result += '<br>'
+			end
+		end
+
+		result.html_safe
+	end
 end

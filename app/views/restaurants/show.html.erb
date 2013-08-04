@@ -1,86 +1,99 @@
 
 <%= render partial: 'application/header_nav' %>
-<div>
+<div class='clearfix'>
 	<h2 class='section-title'><i class='icon-food mr20'></i>Restaurant Channel</h2>
-	<ul class='unstyled'>
-		<% @restaurants.each do |restaurant| %>
-			<% 
-				name = application_return_triple_dashes_if_blank restaurant[:name]
-				address = application_return_triple_dashes_if_blank restaurant[:address]
-				city = application_return_triple_dashes_if_blank restaurant[:city]
-				state = application_return_triple_dashes_if_blank restaurant[:state]
-				zip = application_return_triple_dashes_if_blank restaurant[:zip]
-				category = application_return_triple_dashes_if_blank restaurant[:category]
-				phone = application_return_triple_dashes_if_blank restaurant[:phone]
-				parking = application_return_triple_dashes_if_blank restaurant[:parking]
-				hours = application_return_triple_dashes_if_blank restaurant[:hours]
-				price_range = application_return_triple_dashes_if_blank restaurant[:price_range]
-				accept_creditcard = application_return_triple_dashes_if_blank restaurant[:accept_credit_card]
-				take_reservation = application_return_triple_dashes_if_blank restaurant[:take_reservation]
-				delivery = application_return_triple_dashes_if_blank restaurant[:delivery]
-				takeout = application_return_triple_dashes_if_blank restaurant[:takeout]
-			%>
-			<li class='module'>
-				<h4><%= name -%></h4>
-				<div><%= category -%></div>
-				<address>
-					<div><%= address -%></div>
-					<span><%= "#{city}, #{state} #{zip}." -%>
-				</address>
-				<dl class='clearfix'>
-					<div class='grid3'>
-						<dt>Phone: </dt><dd><%= phone -%></dd>
-					</div>
-					<div class='grid3'>
-						<dt>Parking: </dt><dd><%= parking -%></dd>
-					</div>
-					<div class='grid3'>
-						<dt>Hours: </dt><dd><%= hours -%></dd>
-					</div>
-					<div class='grid3'>
-						<dt>Price Range: </dt><dd><%= raw application_get_stars_from_score(price_range) -%></dd>
-					</div>
-					<div class='grid3'>
-						<dt>Accept Credit Cards: </dt><dd><%= accept_creditcard -%></dd>
-					</div>
-					<div class='grid3'>
-						<dt>Take Reservation: </dt><dd><%= take_reservation -%></dd>
-					</div>
-					<div class='grid3'>
-						<dt>Delivery: </dt><dd><%= delivery -%></dd>
-					</div>
-					<div class='grid3'>
-						<dt>Take Out: </dt><dd><%= takeout -%></dd>
-					</div>
-				</dl>
-			</li>
-		<% end %>
-	</ul>
-	<div class="pagination">
-  		<ul>
-    		<li<%= ' class=active' if @pages[:first] == @pages[:current] -%>><a<%= " href=/restaurants/#{@pages[:prev]}" if @pages[:prev] -%>>Prev</a></li>
-    		<% @pages[:boundaries].each do |page_number| %>
-    			<li<%= ' class=active' if page_number == @pages[:current] -%>><a href='<%= "/restaurants/#{page_number}" %>'><%= page_number -%></a></li>
-    		<% end %>
-    		<li<%= ' class=active' if @pages[:last] == @pages[:current] -%>><a<%= " href=/restaurants/#{@pages[:next]}" if @pages[:next] -%>>Next</a></li>
-  		</ul>
-	</div>
-	<div id='map' style='height:500px;'></div>
+	<div class='grid7 pr20'>
+		<ul class='biz-list unstyled'>
+			<% @restaurants.each_with_index do |restaurant,index| %>
+				<% 
+					name = application_return_triple_dashes_if_blank restaurant[:name]
+					address = application_return_triple_dashes_if_blank restaurant[:address]
+					city = application_return_triple_dashes_if_blank restaurant[:city]
+					state = application_return_triple_dashes_if_blank restaurant[:state]
+					zip = application_return_triple_dashes_if_blank restaurant[:zip]
+					category = application_return_triple_dashes_if_blank restaurant[:category]
+					phone = application_return_triple_dashes_if_blank restaurant[:phone]
+					parking = application_return_triple_dashes_if_blank restaurant[:parking]
+					hours = application_return_triple_dashes_if_blank restaurant[:hours]
+					price_range = application_return_triple_dashes_if_blank restaurant[:price_range]
+					rating = application_return_triple_dashes_if_blank restaurant[:rating]
+					accept_creditcard = application_return_triple_dashes_if_blank restaurant[:accept_credit_card]
+					take_reservation = application_return_triple_dashes_if_blank restaurant[:take_reservation]
+					delivery = application_return_triple_dashes_if_blank restaurant[:delivery]
+					takeout = application_return_triple_dashes_if_blank restaurant[:takeout]
 
+					is_last = (@restaurants.size - 1) == index ? true : false
+				%>
+				<li class='biz-item<%= is_last ? ' last' : '' -%>' itemscope itemtype='http://data-vocabulary.org/Review'>
+					<h4 itemprop='name'>
+						<%= name -%>
+					</h4>
+					<ul class='clearfix unstyled'>
+						<li class='grid6'>
+							<div itemprop='rating' itemscope itemtype='http://data-vocabulary.org/Rating'>
+								<%= raw application_get_stars_from_score(rating) -%>
+								<meta itemprop="rating" content="4.5" /> 
+							</div>
+							<%= category -%>
+						</li>
+						<li class='grid6'>
+							<div itemprop='telephone'><a href='tel:+<%= phone -%>'><%= phone -%></a></div>
+							<address>
+								<%= address -%><br>
+								<%= "#{city}, #{state} #{zip}." -%>
+							</address>
+						</li>
+					</ul>
+				</li>
+			<% end %>
+		</ul>
+		<div class="pagination">
+	  		<ul>
+	    		<li<%= ' class=active' if @pages[:first] == @pages[:current] -%>>
+	    			<a<%= " href=/restaurants/#{@pages[:prev]}" if @pages[:prev] -%>>Prev</a>
+	    		</li>
+	    		<% @pages[:boundaries].each do |page_number| %>
+	    			<li<%= ' class=active' if page_number == @pages[:current] -%>>
+	    				<a href='<%= "/restaurants/#{page_number}" %>'><%= page_number -%></a>
+	    			</li>
+	    		<% end %>
+	    		<li<%= ' class=active' if @pages[:last] == @pages[:current] -%>>
+	    			<a<%= " href=/restaurants/#{@pages[:next]}" if @pages[:next] -%>>Next</a>
+	    		</li>
+	  		</ul>
+		</div>
+	</div>
+	<div class='biz-map-container grid5'>
+		<div id='map' class='map'></div>
+	</div>
+</div>
+<div>
 	<%= render partial: 'restaurants/categories' %>
 </div>
-<% 
-	restaurants_json = @restaurants.to_json(only: [:id,:latlon,:name,:city,:state,:zip,:address,:phone,:hours])
-%>
-<% content_for :body do %>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCVV1uuVJyhdgpkbMLjqDm4jFEcytsdAE&sensor=false"></script>
-	<script>
-		var Gulpio = Gulpio || {};
-		Gulpio.vars = Gulpio.vars || {};
-		Gulpio.vars.places = <%= restaurants_json.html_safe -%>;
-		Gulpio.Map.getNew({
-			id : '#map',
-			places : Gulpio.vars.places
-		});
-	</script>
-<% end %>
+	<% 
+		restaurants_json = @restaurants.to_json(only: [:id,:latlon,:name,:city,:state,:zip,:address,:phone,:hours])
+	%>
+	<% content_for :body do %>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCVV1uuVJyhdgpkbMLjqDm4jFEcytsdAE&sensor=false"></script>
+		<script>
+			var Gulpio = Gulpio || {};
+			Gulpio.vars = Gulpio.vars || {};
+			Gulpio.vars.places = <%= restaurants_json.html_safe -%>;
+			Gulpio.Map.getNew({
+				id : '#map',
+				places : Gulpio.vars.places
+			});
+			jQuery(function($){
+				var $biz_list_el = $('.biz-list'),
+					biz_height = $biz_list_el.height();
+
+				$.scroll.fixedTop({
+					target: '#map',
+					offset: 20,
+					begin: 329,
+					end: 329 + biz_height,
+				});
+			});
+		</script>
+	<% end %>
+</div>

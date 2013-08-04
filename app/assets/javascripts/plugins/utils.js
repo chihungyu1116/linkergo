@@ -28,7 +28,7 @@
         $scroll_el.scroll(function(){
             scroll_top = $scroll_el.scrollTop();
             if(scroll_top >= begin && scroll_top <= end){
-                $target_el.css('top', scroll_top - offset - begin);
+                $target_el.css('top', scroll_top + 2*offset - begin);
             }
 
             console.log('gg', scroll_top + offset, scroll_top, begin, end);

@@ -6,6 +6,7 @@
 		<ul class='biz-list unstyled'>
 			<% @restaurants.each_with_index do |restaurant,index| %>
 				<% 
+					id = restaurant[:id]
 					name = application_return_triple_dashes_if_blank restaurant[:name]
 					address = application_return_triple_dashes_if_blank restaurant[:address]
 					city = application_return_triple_dashes_if_blank restaurant[:city]
@@ -13,31 +14,23 @@
 					zip = application_return_triple_dashes_if_blank restaurant[:zip]
 					category = application_return_triple_dashes_if_blank restaurant[:category]
 					phone = application_return_triple_dashes_if_blank restaurant[:phone]
-					parking = application_return_triple_dashes_if_blank restaurant[:parking]
-					hours = application_return_triple_dashes_if_blank restaurant[:hours]
-					price_range = application_return_triple_dashes_if_blank restaurant[:price_range]
 					rating = application_return_triple_dashes_if_blank restaurant[:rating]
-					accept_creditcard = application_return_triple_dashes_if_blank restaurant[:accept_credit_card]
-					take_reservation = application_return_triple_dashes_if_blank restaurant[:take_reservation]
-					delivery = application_return_triple_dashes_if_blank restaurant[:delivery]
-					takeout = application_return_triple_dashes_if_blank restaurant[:takeout]
-
 					is_last = (@restaurants.size - 1) == index ? true : false
 				%>
 				<li class='biz-item<%= is_last ? ' last' : '' -%>' itemscope itemtype='http://data-vocabulary.org/Review'>
 					<h4 itemprop='name'>
-						<%= name -%>
+						<a href='/businesses/<%= id %>'><%= name -%></a>
 					</h4>
 					<ul class='clearfix unstyled'>
 						<li class='grid6'>
 							<div itemprop='rating' itemscope itemtype='http://data-vocabulary.org/Rating'>
-								<%= raw application_get_stars_from_score(rating) -%>
-								<meta itemprop="rating" content="4.5" /> 
+								Rating: <%= raw application_get_stars_from_score(rating) -%>
+								<meta itemprop="rating" content=<%= rating %> /> 
 							</div>
 							<%= category -%>
 						</li>
 						<li class='grid6'>
-							<div itemprop='telephone'><a href='tel:+<%= phone -%>'><%= phone -%></a></div>
+							<div itemprop='telephone'>Phone: <a href='tel:+<%= phone -%>'><%= phone -%></a></div>
 							<address>
 								<%= address -%><br>
 								<%= "#{city}, #{state} #{zip}." -%>

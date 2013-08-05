@@ -1,5 +1,4 @@
 class RestaurantsController < ApplicationController
-
 	include ApplicationHelper
 
 	def index
@@ -13,7 +12,7 @@ class RestaurantsController < ApplicationController
 		results_offset = page_current*num_results_returned_per_page
 		count = Merchant.count
 
-		@restaurants = Merchant.first(10)#limit(num_results_returned_per_page).offset(results_offset)
+		@restaurants = Merchant.limit(num_results_returned_per_page).offset(results_offset)
 		@pages = application_get_page_obj_from(count,page_current,page_boundary,num_results_returned_per_page)
 	end
 end

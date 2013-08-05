@@ -715,13 +715,14 @@ dl {
 }
 dt,
 dd {
+  display:inline;
   line-height: 20px;
 }
 dt {
   font-weight: bold;
 }
 dd {
-  margin-left: 10px;
+  margin-left:0;
 }
 .dl-horizontal {
   *zoom: 1;

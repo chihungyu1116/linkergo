@@ -1,0 +1,111 @@
+<%= render partial: 'application/header_nav' %>
+<div class='clearfix'>
+	<div class='grid8 pr20'>
+		<% 
+			name = application_return_triple_dashes_if_blank @business[:name]
+			address = application_return_triple_dashes_if_blank @business[:address]
+			city = application_return_triple_dashes_if_blank @business[:city]
+			state = application_return_triple_dashes_if_blank @business[:state]
+			zip = application_return_triple_dashes_if_blank @business[:zip]
+			category = application_return_triple_dashes_if_blank @business[:category]
+			phone = application_return_triple_dashes_if_blank @business[:phone]
+			rating = application_return_triple_dashes_if_blank @business[:rating]
+
+
+			#health_score = application_return_triple_dashes_if_blank @business[:health_score]
+			hours = application_return_triple_dashes_if_blank @business[:hours]
+			good_for_kids = application_return_triple_dashes_if_blank @business[:good_for_kids]
+			accept_creditcard = application_return_triple_dashes_if_blank @business[:accept_credit_card]
+			parking = application_return_triple_dashes_if_blank @business[:parking]
+			attire = application_return_triple_dashes_if_blank @business[:attire]
+			good_for_group = application_return_triple_dashes_if_blank @business[:good_for_group]
+
+			price_range = application_return_triple_dashes_if_blank @business[:price_range]
+			take_reservation = application_return_triple_dashes_if_blank @business[:take_reservation]
+			delivery = application_return_triple_dashes_if_blank @business[:delivery]
+			takeout = application_return_triple_dashes_if_blank @business[:takeout]
+			waiter_service = application_return_triple_dashes_if_blank @business[:waiter_service]
+			outdoor_seating = application_return_triple_dashes_if_blank @business[:outdoor_seating]
+			wifi = application_return_triple_dashes_if_blank @business[:wifi]
+			good_for_meal = application_return_triple_dashes_if_blank @business[:good_for_meal]
+
+			alcohol = application_return_triple_dashes_if_blank @business[:alcohol]
+			noise_level = application_return_triple_dashes_if_blank @business[:noise_level]
+			ambience = application_return_triple_dashes_if_blank @business[:ambience]
+			has_tv = application_return_triple_dashes_if_blank @business[:has_tv]
+			catering = application_return_triple_dashes_if_blank @business[:catering]
+			wheelchair_accessible = application_return_triple_dashes_if_blank @business[:wheelchair_accessible]
+		%>
+		<div itemscope itemtype='http://data-vocabulary.org/Review'>
+			<h4 class='biz-name' itemprop='name'>
+				<%= name -%>
+			</h4>
+			<div itemprop='rating' itemscope itemtype='http://data-vocabulary.org/Rating'>
+				<%= raw application_get_stars_from_score(rating) -%>
+				<meta itemprop="rating" content="4.5" /> 
+			</div>
+			<div>
+				Category: <%= category -%>
+			</div>
+			<div itemprop='telephone'>Phone: <a href='tel:+<%= phone -%>'><%= phone -%></a></div>
+			<address>
+				<%= address -%><br>
+				<%= "#{city}, #{state} #{zip}." -%>
+			</address>
+
+			<ul class='biz-info unstyled clearfix'>
+				<li class='grid4'>
+					<dl>
+						<dt>Hours: </dt><br>
+						<dd><%= application_split_into_multilines(hours) -%></dd><br>
+						<dt>Good for Kids: </dt><dd><%= good_for_kids -%></dd><br>
+						<dt>Accept Credit Cards: </dt><dd><%= accept_creditcard -%></dd><br>
+						<dt>Parking: </dt><dd><%= parking -%></dd><br>
+						<dt>Attire: </dt><dd><%= attire -%></dd><br>
+						<dt>Good for Groups: </dt><dd><%= good_for_group -%></dd>
+					</dl>
+				</li>
+				<li class='grid4'>
+					<dl>
+						<dt>Price Range: </dt><dd><%= raw application_get_stars_from_score(price_range) -%></dd><br>
+						<dt>Take Reservations: </dt><dd><%= take_reservation -%></dd><br>
+						<dt>Delivery: </dt><dd><%= delivery -%></dd><br>
+						<dt>Take Out: </dt><dd><%= takeout -%></dd><br>
+						<dt>Waiter Service: </dt><dd><%= waiter_service -%></dd><br>
+						<dt>Outdoor Seating: </dt><dd><%= outdoor_seating -%></dd><br>
+						<dt>Wifi: </dt><dd><%= wifi -%></dd><br>
+						<dt>Good for: </dt><dd><%= good_for_meal -%></dd>
+					</dl>
+				</li>
+				<li class='grid4'>
+					<dl>
+						<dt>Alcohol: </dt><dd><%= alcohol -%></dd><br>
+						<dt>Noise Level: </dt><dd><%= noise_level -%></dd><br>
+						<dt>Ambience: </dt><dd><%= ambience -%></dd><br>
+						<dt>Has TV: </dt><dd><%= has_tv -%></dd><br>
+						<dt>Catering: </dt><dd><%= catering -%></dd><br>
+						<dt>Wheelchair Accessible: </dt><dd><%= wheelchair_accessible -%></dd>
+					</dl>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class='grid4'>
+		<div id='map'></div>
+	</div>
+</div>
+<% 
+	business_json = @business.to_json(only: [:id,:latlon,:name,:city,:state,:zip,:address,:phone,:hours])
+%>
+<% content_for :body do %>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCVV1uuVJyhdgpkbMLjqDm4jFEcytsdAE&sensor=false"></script>
+	<script>
+		// var Gulpio = Gulpio || {};
+		// Gulpio.vars = Gulpio.vars || {};
+		// Gulpio.vars.places = <%#= business_json.html_safe -%>;
+		// Gulpio.Map.getNew({
+		// 	id : '#map',
+		// 	places : Gulpio.vars.places
+		// });
+	</script>
+<% end %>

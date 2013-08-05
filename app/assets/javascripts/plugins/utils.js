@@ -13,25 +13,33 @@
 
     $.scroll = {};
     $.scroll.fixedTop = function(spec){
-        var scroll_top, scroll_type, begin, end, offset,
-            $target_el, $scroll_el;
+        var scroll_top, scroll_type, $scroll_el,
+            offset, method, $target_el, 
 
-        begin = spec.begin;
-        end = spec.end;
-        offset = spec.offset;
+        offset = spec.offset || 0;
+        method = spec.method || 'top';
         scroll_type = $.browser.msie || $.browser.mozilla ? 'body' : window;
-
-
 
         $target_el = $(spec.target);
         $scroll_el = $(scroll_type);
         $scroll_el.scroll(function(){
+            var scroll_top, scroll_dist, scroll_begin, scroll_end,
+                move_amt;
+
+            scroll_begin = spec.begin;
+            scroll_end = spec.end;
             scroll_top = $scroll_el.scrollTop();
-            if(scroll_top >= begin && scroll_top <= end){
-                $target_el.css('top', scroll_top + 2*offset - begin);
+
+            if(scroll_top < scroll_begin) {
+                scroll_dist = 0;
+            } else if(scroll_top >= scroll_begin && scroll_top <= scroll_end){
+                scroll_dist = scroll_top + offset - scroll_begin;
+            } else {
+                scroll_dist = scroll_end - scroll_begin;
             }
 
-            console.log('gg', scroll_top + offset, scroll_top, begin, end);
+            scroll_dist += 'px'
+            $target_el.css(method,scroll_dist);
         });
     }
 }(jQuery));

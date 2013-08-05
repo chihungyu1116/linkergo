@@ -13,6 +13,11 @@
 	-moz-border-radius:0;
 	border-radius:0;
 }
+.trans-fast {
+	-webkit-transition:all 0.3s ease;
+	-moz-transition:all 0.3s ease;
+	transition:all 0.3s ease;
+}
 .biz-item {
 	padding:10px;
 	margin-bottom:10px;
@@ -29,5 +34,5 @@
 	position:absolute;
 	left:0;
 	width:100%;
-	height:400px;
+	height:300px;
 }

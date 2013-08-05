@@ -2,7 +2,7 @@
 <%= render partial: 'application/header_nav' %>
 <div class='clearfix'>
 	<h2 class='section-title'><i class='icon-food mr20'></i>Restaurant Channel</h2>
-	<div class='grid7 pr20'>
+	<div class='grid8 pr20'>
 		<ul class='biz-list unstyled'>
 			<% @restaurants.each_with_index do |restaurant,index| %>
 				<% 
@@ -63,7 +63,7 @@
 	  		</ul>
 		</div>
 	</div>
-	<div class='biz-map-container grid5'>
+	<div class='biz-map-container grid4'>
 		<div id='map' class='map'></div>
 	</div>
 </div>
@@ -85,13 +85,17 @@
 			});
 			jQuery(function($){
 				var $biz_list_el = $('.biz-list'),
-					biz_height = $biz_list_el.height();
+					$map = $('#map'),
+					biz_list_offset = $biz_list_el.offset(),
+					biz_list_offset_top = biz_list_offset.top,
+					biz_list_height = $biz_list_el.height(),
+					map_height = $map.height();
 
 				$.scroll.fixedTop({
 					target: '#map',
-					offset: 20,
-					begin: 329,
-					end: 329 + biz_height,
+					begin: biz_list_offset_top,
+					end: biz_list_offset_top + biz_list_height - map_height,
+					method: 'margin-top'
 				});
 			});
 		</script>

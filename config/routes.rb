@@ -3,6 +3,7 @@ Gulpio::Application.routes.draw do
 
   resources :restaurants
   resources :businesses
+  resources :reviews
 
   get '/not_found' => 'application#not_found'
 

@@ -53,3 +53,9 @@ gem 'font-awesome-rails'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'carrierwave'
+gem 'rmagick'
+gem 'fog'
+gem 'carrierwave_direct'
+gem 'sidekiq'

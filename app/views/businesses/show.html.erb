@@ -2,6 +2,8 @@
 <div class='clearfix'>
 	<div class='grid8 pr20'>
 		<% 
+			id = @business[:id]
+
 			name = application_return_triple_dashes_if_blank @business[:name]
 			address = application_return_triple_dashes_if_blank @business[:address]
 			city = application_return_triple_dashes_if_blank @business[:city]
@@ -12,7 +14,7 @@
 			rating = application_return_triple_dashes_if_blank @business[:rating]
 
 
-			#health_score = application_return_triple_dashes_if_blank @business[:health_score]
+			health_score = @business[:health_score]
 			hours = application_return_triple_dashes_if_blank @business[:hours]
 			good_for_kids = application_return_triple_dashes_if_blank @business[:good_for_kids]
 			accept_creditcard = application_return_triple_dashes_if_blank @business[:accept_credit_card]
@@ -52,10 +54,10 @@
 				<%= address -%><br>
 				<%= "#{city}, #{state} #{zip}." -%>
 			</address>
-
 			<ul class='biz-info unstyled clearfix'>
 				<li class='grid4'>
 					<dl>
+						<dt>Health Score: </dt><dd><%= "#{health_score} out of 100" -%></dd><br>
 						<dt>Hours: </dt><br>
 						<dd><%= application_split_into_multilines(hours) -%></dd><br>
 						<dt>Good for Kids: </dt><dd><%= good_for_kids -%></dd><br>
@@ -90,9 +92,15 @@
 			</ul>
 		</div>
 	</div>
-	<div class='grid4'>
-		<div id='map'></div>
+	<div class='biz-map-container grid4'>
+		<div id='map' class='map'></div>
 	</div>
+</div>
+<div class='biz-actions'>
+	<a class='btn mr5'>Send to Friend</a>
+	<a class='btn mr5'>Bookmark</a>
+	<a class='btn mr5'>Send to Phone</a>
+	<a class='btn btn-primary' href='<%= "/reviews/new?business_id=#{id}" -%>'>Write a Review</a>
 </div>
 <% 
 	business_json = @business.to_json(only: [:id,:latlon,:name,:city,:state,:zip,:address,:phone,:hours])
@@ -100,12 +108,12 @@
 <% content_for :body do %>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCVV1uuVJyhdgpkbMLjqDm4jFEcytsdAE&sensor=false"></script>
 	<script>
-		// var Gulpio = Gulpio || {};
-		// Gulpio.vars = Gulpio.vars || {};
-		// Gulpio.vars.places = <%#= business_json.html_safe -%>;
-		// Gulpio.Map.getNew({
-		// 	id : '#map',
-		// 	places : Gulpio.vars.places
-		// });
+		var Gulpio = Gulpio || {};
+		Gulpio.vars = Gulpio.vars || {};
+		Gulpio.vars.place = <%= business_json.html_safe -%>;
+		Gulpio.Map.getNew({
+			id : '#map',
+			places : [Gulpio.vars.place]
+		});
 	</script>
 <% end %>

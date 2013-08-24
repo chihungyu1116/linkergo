@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  href: MyString
+  visited: false
+  failed: false
+  domain: MyString
+  crawled: false
+  merchant_id: 1
+
+two:
+  href: MyString
+  visited: false
+  failed: false
+  domain: MyString
+  crawled: false
+  merchant_id: 1

@@ -10,8 +10,5 @@ class ReviewsController < ApplicationController
 		rescue
 			return redirect_to '/not_found'
 		end
-
-		
-
 	end
 end

@@ -59,3 +59,7 @@ gem 'rmagick'
 gem 'fog'
 gem 'carrierwave_direct'
 gem 'sidekiq'
+
+gem 'nokogiri'
+gem "rest-client", "~> 1.6.7"
+gem 'geocoder'

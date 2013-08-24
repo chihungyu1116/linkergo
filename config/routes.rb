@@ -6,6 +6,8 @@ Gulpio::Application.routes.draw do
   resources :reviews
 
   get '/not_found' => 'application#not_found'
+  get '/admins/run' => 'admins#run'
+
 
   root to: 'publics#index'
   # The priority is based upon order of creation: first created -> highest priority.

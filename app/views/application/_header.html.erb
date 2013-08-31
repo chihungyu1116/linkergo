@@ -1,28 +1,22 @@
-<div class='navbar navbar-inverse mb40'>
-	<div class='navbar-inner rnd-crn-0'>
-		<div class='container'>
-			<a class='brand' href='/'>Gulpio</a>
-			<ul class='nav pull-right'>
-				<% if user_signed_in? %>
-					<li class='divider-vertical'></li>
-					<li>
-  						<%= link_to '<i class="icon-user mr10"></i>Edit profile'.html_safe, edit_user_registration_path %>
-  					</li>
-  					<li class='divider-vertical'></li>
-  					<li>
-  						<%= link_to '<i class="icon-signout mr10"></i>Logout'.html_safe, destroy_user_session_path, method: :delete %>
-  					</li>
-				<% else %>
-					<li class='divider-vertical'></li>
-					<li>
-						<%= link_to '<i class="icon-pencil mr10"></i>Sign up'.html_safe, new_user_registration_path %>
-					</li>
-					<li class='divider-vertical'></li>
-					<li>
-						<%= link_to '<i class="icon-signin mr10"></i>Login'.html_safe, new_user_session_path %>
-					</li>
-				<% end %>
-			</ul>
-		</div>
+<div class='navbar navbar-default app-header-navbar'>	
+	<div class='navbar-header'>
+		<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.app-header-menu'>
+			<span class='sr-only'>Toggle navigation</span>
+			<span class='icon-bar'></span>
+			<span class='icon-bar'></span>
+			<span class='icon-bar'></span>
+		</button>
+		<a class='navbar-brand' href='/'>Gulpio</a>
+	</div>
+	<div class='collapse navbar-collapse app-header-menu' role='navigation'>
+		<ul class='nav navbar-nav app-header-nav-links'>
+			<% if user_signed_in? %>
+			<li><%= link_to '<i class="icon-user"></i> &nbsp;Edit profile'.html_safe, edit_user_registration_path %></li>
+			<li><%= link_to '<i class="icon-signout"></i> &nbsp;Logout'.html_safe, destroy_user_session_path, method: :delete %></li>
+		<% else %>
+			<li><%= link_to '<i class="icon-pencil"></i> &nbsp;Sign up'.html_safe, new_user_registration_path %></li>
+			<li><%= link_to '<i class="icon-signin"></i> &nbsp;Login'.html_safe, new_user_session_path %></li>
+		<% end %>
+		</ul>
 	</div>
 </div>

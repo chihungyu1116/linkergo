@@ -1,0 +1,16 @@
+@media (min-width: 768px) {
+	.app-header-nav-links {
+		float:right;
+	}
+	.app-header-search-links {
+		float:right;
+	}
+}
+@media (max-width: 767px) {
+	.app-header-nav-links {
+		float:left;
+	}
+	.app-header-search-links {
+		float:none;
+	}
+}

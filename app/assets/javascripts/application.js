@@ -14,7 +14,8 @@
 //= require jquery_ujs
 //= require bootstrap/bootstrap.min
 //= require plugins/lazyload
-//= require plugins/utils
+//= require plugins/utility
 //= require map/google_map
+//= require global/initializer
 //= require turbolinks
 //= require_self

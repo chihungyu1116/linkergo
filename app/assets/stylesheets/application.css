@@ -13,8 +13,6 @@
  *= require global/grid
  *= require global/components
  *= require global/style
- *= require global/desktop
- *= require global/mobile
  *= require global/media
  *= require_self
  */

@@ -480,8 +480,12 @@ module AdminsHelper
 					link.update_attribute(:failed,true)
 				elsif e.match(/503/)
 					Rails.logger.info '503'
+				elsif e.match(/buffer error/)
+					Rails.logger.info 'Buffer Error 500'
+					sleep rand(3)
 				else
-					break
+					Rails.logger.info 'Unknown Error --- wait and reconnect'
+					sleep rand(10)
 				end
 			end
 		end
@@ -536,11 +540,8 @@ module AdminsHelper
 					sleep 30 + rand(30)
 				elsif e.match(/502 Proxy Error/)
 					Rails.logger.info '502 Exception'
-					break
 				elsif e.match(/403/)
 					Rails.logger.info '403 Exception'
-					break
-				else
 					break
 				end
 			end

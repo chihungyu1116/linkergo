@@ -1,3 +1,16 @@
+.top-spacer-xs {
+	margin-top:10px;
+}
+.top-spacer-sm {
+	margin-top:20px;
+}
+.top-spacer-md {
+	margin-top:40px;
+}
+.top-spacer-lg {
+	margin-top:80px;
+}
+
 .box {
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;

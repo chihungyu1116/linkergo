@@ -23,8 +23,10 @@
 			<section class='app-header-nav'><%= render partial: 'application/header_nav' %></section>
 			<section class='app-header-search'><%= render partial: 'application/header_search' %></section>
 			<main class='app-main'>
-				<% if notice %><div class='alert alert-info'><%= notice %></div><% end %>
-				<% if alert %><div class='alert alert-error'><%= alert %></div><% end %>
+				<div class='clearfix'>
+					<% if notice %><div class='text-info col-xs-12'><%= notice %></div><% end %>
+					<% if alert %><div class='text-danger col-xs-12'><%= alert %></div><% end %>
+				</div>
 				<%= yield %>
 			</main>
 			<footer class='app-footer'></footer>

@@ -18,19 +18,18 @@
 	<!--[if IE 8]><body class="ie ie8"><![endif]-->
 	<!--[if IE 9]><body class="ie ie9"><![endif]-->
 	<!--[if !IE]> --><body><!-- <![endif]-->
-		<div class='app container'>
+		<div id='app' class='app container'>
 			<header class='app-header'><%= render partial: '/application/header' %></header>
 			<section class='app-header-nav'><%= render partial: 'application/header_nav' %></section>
 			<section class='app-header-search'><%= render partial: 'application/header_search' %></section>
-			<main class='app-main'>
-				<div class='clearfix'>
-					<% if notice %><div class='text-info col-xs-12'><%= notice %></div><% end %>
-					<% if alert %><div class='text-danger col-xs-12'><%= alert %></div><% end %>
-				</div>
-				<%= yield %>
-			</main>
+			<main class='app-main'><%= yield %></main>
 			<footer class='app-footer'></footer>
+			<section id='app-overlay' class='app-overlay none'>
+				<div class='app-overlay-shadow'></div>
+				<div class='app-overlay-content'><% yield :overlay %></div>
+			</section>
 		</div>
-		<%= yield :body %>
+		<% unless flash.empty? %><div id='app-flash' class='none'></div><% end %>
+		<%= yield :script %>
 	</body>
 </html>

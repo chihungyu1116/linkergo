@@ -11,6 +11,7 @@
  *= require font-awesome
  *= require global/base
  *= require global/grid
+ *= require global/app
  *= require global/components
  *= require global/style
  *= require global/media

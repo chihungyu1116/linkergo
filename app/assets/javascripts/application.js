@@ -16,6 +16,7 @@
 //= require plugins/lazyload
 //= require plugins/utility
 //= require map/google_map
+//= require global/app
 //= require global/initializer
 //= require turbolinks
 //= require_self

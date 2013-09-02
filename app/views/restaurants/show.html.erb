@@ -65,7 +65,7 @@
 	<% 
 		restaurants_json = @restaurants.to_json(only: [:id,:latlon,:name,:city,:state,:zip,:address,:phone,:hours])
 	%>
-	<% content_for :body do %>
+	<% content_for :script do %>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCVV1uuVJyhdgpkbMLjqDm4jFEcytsdAE&sensor=false"></script>
 		<script>
 			var Gulpio = Gulpio || {};

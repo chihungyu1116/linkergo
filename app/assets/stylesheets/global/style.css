@@ -1,8 +1,31 @@
-.app-header-navbar {
-	margin-bottom:10px;
-	background:transparent;
-	border:0;
+.top-spacer-xs {
+	margin-top:10px;
 }
-.app-header-search-navbar {
-	margin:10px 0;
+.top-spacer-sm {
+	margin-top:20px;
+}
+.top-spacer-md {
+	margin-top:40px;
+}
+.top-spacer-lg {
+	margin-top:80px;
+}
+.box {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+.leaf {
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	vertical-align:top;
+}
+.round-corner-none {
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border-radius:0;
+}
+.none {
+	display:none;
 }

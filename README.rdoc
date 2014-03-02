@@ -1,2 +1,2 @@
 linkergo use rails, bootstrap, jquery, etc
-for displaying the data I scrapped from the Scrapper I wrote
+for displaying the data I scrapped using the Scrapper I wrote
